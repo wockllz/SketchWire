@@ -1,7 +1,7 @@
 {
   "name": "sketchwire",
   "version": "1.0.0",
-  "description": "SketchWire — draw a wireframe, watch local AI agents turn it into a real working web app, then see it float in 3D.",
+  "description": "SketchWire \u2014 draw a wireframe, watch local AI agents turn it into a real working web app, then see it float in 3D.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,10 +9,17 @@
     "selftest": "node tests/selftest.js",
     "demo": "node tests/demo.js"
   },
-  "keywords": ["wireframe", "ai", "ollama", "local-first", "prototyping", "3d"],
+  "keywords": [
+    "wireframe",
+    "ai",
+    "ollama",
+    "local-first",
+    "prototyping",
+    "3d"
+  ],
   "license": "MIT",
   "dependencies": {
-    "better-sqlite3": "^11.3.0",
+    "better-sqlite3": "^12.11.1",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "ws": "^8.18.0"
