@@ -6,6 +6,7 @@
 "use strict";
 
 const express = require("express");
+const { securityHeaders } = require("./middleware/security");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -19,9 +20,11 @@ const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
 const GENERATED_DIR = path.join(__dirname, "generated");
 
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: "2mb" }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
+
+app.use(securityHeaders);
 
 // ---------------------------------------------------------------- WS rooms
 
