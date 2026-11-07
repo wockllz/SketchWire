@@ -671,6 +671,8 @@
     zone.append(frame);
     $("preview-actions").classList.remove("hidden");
     $("preview-link").href = previewUrl;
+    const dlLink = $("preview-download");
+    if (dlLink && mission && mission.id) dlLink.href = "/api/missions/" + mission.id + "/download";
     const meta = $("preview-meta");
     if (mission) {
       const secs = mission.duration_ms ? Math.round(mission.duration_ms / 1000) : null;

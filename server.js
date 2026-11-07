@@ -10,6 +10,7 @@ const { securityHeaders } = require("./middleware/security");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { buildZip } = require("./src/zip");
 const WebSocket = require("ws");
 
 const db = require("./src/db");
@@ -168,6 +169,21 @@ app.post("/api/missions", (req, res) => {
 });
 
 // ---------------------------------------------------------------- preview
+
+app.get("/api/missions/:id/download", (req, res) => {
+  const mission = db.getMission(req.params.id);
+  if (!mission) return res.status(404).json({ ok: false, error: "Mission not found." });
+  const dir = path.join(GENERATED_DIR, req.params.id);
+  const files = {};
+  for (const name of ["index.html", "style.css", "app.js"]) {
+    try { files[name] = fs.readFileSync(path.join(dir, name), "utf8"); } catch { /* missing */ }
+  }
+  if (!files["index.html"]) return res.status(404).json({ ok: false, error: "No prototype generated yet." });
+  const zip = buildZip(files);
+  res.setHeader("Content-Type", "application/zip");
+  res.setHeader("Content-Disposition", `attachment; filename="sketchwire-prototype.zip"`);
+  res.send(zip);
+});
 
 app.get("/p/:missionId/:file", (req, res) => {
   const { missionId, file } = req.params;
